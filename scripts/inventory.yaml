@@ -1,0 +1,144 @@
+vars:
+  domain: anozie.lan
+  ntp_servers: [20.0.0.10]
+  dns_servers: [20.0.0.20]
+  snmp_ro: NETREADONLY
+  login:
+    username: admin
+    password: admin123
+    secret: enable123
+
+sites:
+  CORE:
+    devices:
+      - name: CORE-R1
+        role: core
+        mgmt_ip: 20.255.0.1
+        loopback: 1.1.1.1 255.255.255.255
+
+      - name: CORE-R2
+        role: core
+        mgmt_ip: 20.255.0.28
+        loopback: 2.2.2.2 255.255.255.255
+
+      - name: CORE-R3
+        role: core
+        mgmt_ip: 20.255.0.31
+        loopback: 3.3.3.3 255.255.255.255
+
+      - name: CORE-R4
+        role: core
+        mgmt_ip: 20.255.0.23
+        loopback: 4.4.4.4 255.255.255.255
+
+  "HR & ADMIN":
+    vlan: 20
+    subnet: 20.20.20.0/24
+    devices:
+      - name: HR-BR-R19
+        role: branch
+        mgmt_ip: 20.255.20.1
+        lan_svi: 20.20.20.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.211.0/30
+          local_ip: 20.255.211.1 255.255.255.252
+          peer: CORE-R3
+
+  RESEARCH:
+    vlan: 30
+    subnet: 30.30.30.0/24
+    devices:
+      - name: RSH-BR-R89
+        role: branch
+        mgmt_ip: 20.255.30.1
+        lan_svi: 30.30.30.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.190.0/30
+          local_ip: 20.255.190.1 255.255.255.252
+          peer: CORE-R4
+
+  OPERATIONS:
+    vlan: 50
+    subnet: 50.50.50.0/24
+    devices:
+      - name: OP-BR-R59
+        role: branch
+        mgmt_ip: 20.255.50.1
+        lan_svi: 50.50.50.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.244.0/30
+          local_ip: 20.255.244.1 255.255.255.252
+          peer: CORE-R3
+
+  ACCOUNTING:
+    vlan: 70
+    subnet: 70.70.70.0/24
+    devices:
+      - name: AC-BR-R33
+        role: branch
+        mgmt_ip: 20.255.70.1
+        lan_svi: 70.70.70.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.241.0/30
+          local_ip: 20.255.241.1 255.255.255.252
+          peer: CORE-R2
+
+  MARKETING:
+    vlan: 64
+    subnet: 64.64.64.0/24
+    devices:
+      - name: MK-BR-R98
+        role: branch
+        mgmt_ip: 20.255.64.1
+        lan_svi: 64.64.64.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.29.0/30
+          local_ip: 20.255.29.1 255.255.255.252
+          peer: CORE-R2
+
+  "INFORMATION & TECHNOLOGY":
+    vlan: 79
+    subnet: 79.79.79.0/24
+    devices:
+      - name: IF-BR-R77
+        role: branch
+        mgmt_ip: 20.255.79.1
+        lan_svi: 79.79.79.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.41.0/30
+          local_ip: 20.255.41.1 255.255.255.252
+          peer: CORE-R4
+
+  "LEGAL & COMPLIANCE":
+    vlan: 88
+    subnet: 88.88.88.0/24
+    devices:
+      - name: LC-BR-R29
+        role: branch
+        mgmt_ip: 20.255.88.1
+        lan_svi: 88.88.88.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/0
+          p2p: 20.255.49.0/30
+          local_ip: 20.255.49.1 255.255.255.252
+          peer: CORE-R1
+
+  SECURITY:
+    vlan: 63
+    subnet: 63.63.63.0/24
+    devices:
+      - name: SC-BR-R77
+        role: branch
+        mgmt_ip: 20.255.63.1
+        lan_svi: 63.63.63.1 255.255.255.0
+        uplink:
+          interface: GigabitEthernet0/1
+          p2p: 20.255.22.0/30
+          local_ip: 20.255.22.1 255.255.255.252
+          peer: CORE-R1
