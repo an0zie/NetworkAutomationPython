@@ -1,0 +1,48 @@
+hostname {{ name }}
+
+ip domain-name {{ domain }}
+
+username {{ login.username }} privilege 15 password {{ login.password }}
+enable secret {{ login.secret }}
+
+crypto key generate rsa modulus 1024
+ip ssh version 2
+
+line vty 0 4
+ login local
+ transport input ssh
+ exec-timeout 15 0
+
+{# ---- OSPF CONFIGURATION ---- #}
+{% if role == 'branch' %}
+router ospf 10
+ router-id {{ mgmt_ip }}
+ network {{ lan_svi.split('/')[0] }} 0.0.0.255 area 0
+ network {{ uplink.p2p.split('/')[0] }} 0.0.0.3 area 0
+
+{% elif role == 'core' %}
+router ospf 10
+ router-id {{ loopback.split('/')[0] }}
+ network {{ loopback.split('/')[0] }} 0.0.0.0 area 0
+
+{% endif %}
+
+{% if role == 'branch' %}
+! ===== Branch router / department gateway =====
+interface Vlan{{ site.vlan }}
+ ip address {{ lan_svi }}
+ no shutdown
+
+interface {{ uplink.interface }}
+ ip address {{ uplink.local_ip }}
+ description Uplink to {{ uplink.peer }}
+ no shutdown
+
+{% elif role == 'core' %}
+! ===== Core router =====
+! Loopback used as router ID / MGMT
+interface Loopback0
+ ip address {{ loopback }}
+ no shutdown
+
+{% endif %}
