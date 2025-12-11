@@ -1,0 +1,18 @@
+As  a Student Network Engineer, I want to automatically generate router interface configuration commands, so I can avoid manual typing errors and save time when configuring Cisco devices.
+
+As a  Student Network Engineer, I want to automatically   generate SSH setup commands, so I can securely access  routers remotely using authenticated login.
+
+As a Student Network Engineer, I want to build and test a Packet Tracer network using Cisco 2911 routers and 3560 Mulitlayer switches , 2960 switches, Servers and PCs so I can simulate a real enterprise environment.
+
+As a Student Network Engineer, I want to verify connectivity between PCs, routers, and switches, so I can confirm that the generated configurations are correct and functional.
+
+As a Student Network Engineer, I want to understand every command produced by the automation script, so I can learn more about Cisco IOS configuration and improve my network engineering skills.
+
+
+
+
+As a Student, I want the automation script to output clean and readable configuration blocks, so I can easily copy and paste them into Packet Tracer routers.
+
+As a Student, I want to troubleshoot any issues with the script or devices, so I can learn how automation affects real network setups.
+
+As a Student, I want to run the script repeatedly with different inputs, so I can generate configurations for multiple routers without rewriting commands manually.
